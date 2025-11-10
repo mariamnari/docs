@@ -31,11 +31,8 @@ jobs:
       - name: Push docs to Theneo
         run: |
           echo "Pushing docs to Theneo..."
-          theneo import \
+          theneo project import \
+            --file ./wex-docs/health-api.json \
             --project blank \
-            --workspace wexinc \
             --publish \
-            --file ./health-api.json \
-            --import-type overwrite
-            --dir wex-docs \
             --profile dev
