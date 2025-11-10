@@ -1,9 +1,8 @@
 name: Push to Theneo
 
 on:
-  push:
-    branches:
-      - main
+  pull_request_target:
+    types: [ closed, edited, opened, synchronize, ready_for_review ]
   workflow_dispatch:
 
 jobs:
