@@ -32,7 +32,7 @@ jobs:
         run: |
           echo "Pushing docs to Theneo..."
           theneo import \
-            --project blank \
+            --project sample-theneo-doc \
             --workspace wexinc \
             --dir wex-docs \
             --profile dev
