@@ -1,0 +1,4 @@
+- get_identity-v1-business-business-id
+- post_identity-v1-business-lookup
+- get_identity-v1-persons-person-id
+- post_identity-v1-persons-lookup

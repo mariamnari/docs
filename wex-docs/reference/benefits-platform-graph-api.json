@@ -1,0 +1,92 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Benefits Platform Graph API",
+    "description": "Benefits Platform Graph",
+    "termsOfService": "https://app.opslevel.com/services/bp-graph-service",
+    "contact": {
+      "name": "epec Team",
+      "url": "https://app.opslevel.com/teams/epec",
+      "email": "enterpriseplatformsengineering-core@wexinc.com"
+    },
+    "license": {
+      "name": "BP Service",
+      "url": "https://app.opslevel.com/services/bp-graph-service"
+    },
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://platform.uat.benefits.wexglobal.com/graph",
+      "description": "UAT"
+    },
+    {
+      "url": "https://platform.benefits.wexglobal.com/graph",
+      "description": "PROD"
+    }
+  ],
+  "paths": {
+    "/health/liveness": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "summary": "Get Liveness",
+        "description": "This endpoint is used to check the liveness of the service. This is just a simple ping to see if the service is alive.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "results": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error: response status is 503",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "results": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter a token",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}

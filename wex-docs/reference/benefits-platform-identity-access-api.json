@@ -1,0 +1,767 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Benefits Platform Identity Access API",
+    "description": "The 'IAM', Identity Access Management API is a component of the Benefits Platform designed to retrieve Identity information for entities such as \r\n\t\t                administrators, employers, partners, and participants. The Benefits \r\n\t\t                Platform encompasses various benefits management systems such as HSA, FSA, HRA management, \r\n\t\t                and COBRA coverage.",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://platform.uat.benefits.wexglobal.com",
+      "description": "UAT"
+    }
+  ],
+  "paths": {
+    "/identity/v1/business/{business_id}": {
+      "get": {
+        "tags": [
+          "Identity"
+        ],
+        "summary": "Get Business Identity",
+        "description": "This route will only return the Business if it exists in the new Benefits Platform Identity.\r\nTo execute a call to lookup a business identity, a valid <b>JWT Token</b> is required for authentication.",
+        "parameters": [
+          {
+            "name": "business_id",
+            "in": "path",
+            "description": "The Business Identity GUID to fetch data",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Request-Id",
+            "in": "header",
+            "description": "Optional correlation ID associated with the request, comprised of alphanumeric or hyphen characters up to 36 characters in length.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessIdentityResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessIdentityResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessIdentityResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/identity/v1/business/lookup": {
+      "post": {
+        "tags": [
+          "Identity"
+        ],
+        "summary": "Lookup Businesses Identity",
+        "description": "This unique identifier will serve as a key reference for accessing and managing data associated with the specified business entity.                                                                                                                     \r\nTo execute a call to lookup a business identity, a valid <b>JWT Token</b> is required for authentication.                                                                     \r\nImportant: Both administrator_code and employer_code are required to lookup a business employer. \r\nWhereas an employer_code value is not required to retrieve an Administrator Business.",
+        "parameters": [
+          {
+            "name": "X-Request-Id",
+            "in": "header",
+            "description": "Optional correlation ID associated with the request, comprised of alphanumeric or hyphen characters up to 36 characters in length.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The basic information about the business identity to retrieve",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/BusinessIdentityDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/BusinessIdentityDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/BusinessIdentityDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessIdentityLookupResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessIdentityLookupResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessIdentityLookupResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/identity/v1/persons/{person_id}": {
+      "get": {
+        "tags": [
+          "Identity"
+        ],
+        "summary": "Get Persons Identity",
+        "description": "This route will only return the Person if it exists in the new Benefits Platform Identity.\r\nTo execute a call to get a person identity, a valid <b>JWT Token</b> is required for authentication.",
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "description": "the GUID of the person Identity to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Request-Id",
+            "in": "header",
+            "description": "Optional correlation ID associated with the request, comprised of alphanumeric or hyphen characters up to 36 characters in length.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonIdentityResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonIdentityResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonIdentityResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/identity/v1/persons/lookup": {
+      "post": {
+        "tags": [
+          "Identity"
+        ],
+        "summary": "Lookup Persons Identity",
+        "description": "This unique identifier will serve as a key reference for accessing and managing data associated with the specified person entity.                                                                                                                     \r\nTo execute a call to lookup a person identity, a valid <b>JWT Token</b> is required for authentication.                                                                     \r\nImportant: administrator_code, employer_code and consumer_identifier are required for the lookup\r\n, and the value for consumer_identifier must match the ConsumerIdentifierType.",
+        "parameters": [
+          {
+            "name": "X-Request-Id",
+            "in": "header",
+            "description": "Optional correlation ID associated with the request, comprised of alphanumeric or hyphen characters up to 36 characters in length.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The basic information about the person identity to retrieve",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PersonIdentityDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PersonIdentityDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PersonIdentityDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonIdentityLookupResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonIdentityLookupResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonIdentityLookupResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/identity/health/liveness": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "summary": "Get Liveness",
+        "description": "This endpoint is used to check the liveness of the service. This is just a simple ping to see if the service is alive.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "results": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error: response status is 503",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "results": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BusinessCDB": {
+        "type": "object",
+        "properties": {
+          "partner": {
+            "type": "string",
+            "nullable": true
+          },
+          "company_id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "employer_id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BusinessCDH": {
+        "type": "object",
+        "properties": {
+          "administrator_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "administrator_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "employer_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "employer_id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BusinessIdentityDto": {
+        "type": "object",
+        "properties": {
+          "administrator_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "employer_code": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BusinessIdentityLookupResponse": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page_size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BusinessIdentityResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BusinessIdentityResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "parent": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "type": {
+            "enum": [
+              "Administrator",
+              "Employer",
+              "BusinessParty",
+              "Carrier",
+              "Division",
+              "Partner",
+              "Vendor"
+            ],
+            "type": "string"
+          },
+          "cdh": {
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BusinessCDH"
+              }
+            ],
+            "nullable": true
+          },
+          "cdb": {
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BusinessCDB"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExceptionResult": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "additional_prop": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PersonCDBResponse": {
+        "type": "object",
+        "properties": {
+          "partner": {
+            "type": "string",
+            "nullable": true
+          },
+          "company_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "member_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "billing_frequency": {
+            "enum": [
+              "MONTHLY",
+              "WEEKLY",
+              "BIWEEKLY",
+              "QUARTERLY",
+              "YEARLY",
+              "SEMIMONTHLY"
+            ],
+            "type": "string"
+          },
+          "billing_start_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "billing_type": {
+            "enum": [
+              "RETIREE",
+              "PREMIUMPAY",
+              "CASHPAY",
+              "FMLA",
+              "LOANREPAYMENT",
+              "LEAVEOFABSENCE",
+              "LTDPREMIUM",
+              "DISABILITYPREMIUM",
+              "CUSTOM",
+              "STDPREMIUM"
+            ],
+            "type": "string"
+          },
+          "qualifying_event_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PersonCDH": {
+        "type": "object",
+        "properties": {
+          "administrator_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "employer_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "individual_id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PersonIdentityDto": {
+        "type": "object",
+        "properties": {
+          "employer_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "administrator_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "consumer_identifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "consumer_identifier_type": {
+            "enum": [
+              "EmployeeNumber",
+              "SocialSecurityNumber",
+              "ExchangeId",
+              "EmployerEmployeeId"
+            ],
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "Consumer",
+              "AuthorizedSigner",
+              "Dependent",
+              "Contact"
+            ],
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PersonIdentityLookupResponse": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page_size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonIdentityResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PersonIdentityResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "parent": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "enum": [
+              "Consumer",
+              "AuthorizedSigner",
+              "Dependent",
+              "Contact"
+            ],
+            "type": "string"
+          },
+          "cdb": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonCDBResponse"
+            },
+            "nullable": true
+          },
+          "cdh": {
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonCDH"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter a token",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}

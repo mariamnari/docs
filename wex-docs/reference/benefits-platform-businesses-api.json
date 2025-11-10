@@ -1,0 +1,1254 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Benefits Platform Businesses API",
+    "description": "A hierarchical structure that serves as the backbone for organizing different levels of business within an entity, such as administrators, employers, divisions, and stores.",
+    "contact": {
+      "name": "Mavericks Team - WEX Inc.",
+      "url": "https://app.opslevel.com/teams/mavericks",
+      "email": "gl-mavericks-platform@wexinc.com"
+    },
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://localhost",
+      "description": "DEV"
+    },
+    {
+      "url": "https://platform.uat.benefits.wexglobal.com/businesses",
+      "description": "UAT"
+    },
+    {
+      "url": "https://platform.benefits.wexglobal.com/businesses",
+      "description": "PROD"
+    }
+  ],
+  "paths": {
+    "/v1/administrator": {
+      "post": {
+        "tags": [
+          "Administrator"
+        ],
+        "summary": "Creates Administrator",
+        "description": "Creates a new administrator in the domain.",
+        "parameters": [
+          {
+            "name": "X-Request-Id",
+            "in": "header",
+            "description": "Optional correlation ID associated with the request, comprised of alphanumeric or hyphen characters up to 36 characters in length.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The request object containing details\r\n            for creating a new administrator.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CreateAdministratorRequest"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CreateAdministratorRequest"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CreateAdministratorRequest"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created a new administrator in the domain.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Administrator"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Administrator"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Administrator"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request. Check request body.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Authentication failed."
+          },
+          "403": {
+            "description": "Forbidden. You're not allowed to perform this operation."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/v1/business/{id}": {
+      "get": {
+        "tags": [
+          "Business"
+        ],
+        "summary": "Get Business",
+        "description": "Retrieve basic information about a business.\r\n            A business is a generic entity that has different types.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The GUID generated for accesing this specific business and its related resources.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Request-Id",
+            "in": "header",
+            "description": "Optional correlation ID associated with the request, comprised of alphanumeric or hyphen characters up to 36 characters in length.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved business information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Business"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request. Check query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Authentication failed."
+          },
+          "403": {
+            "description": "Forbidden. You're not allowed to perform this operation."
+          },
+          "404": {
+            "description": "Not Found. No business found for supplied ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Business"
+        ],
+        "summary": "Updates Business",
+        "description": "Updates a new business in the domain. Notice that some information cannot be updated.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Request-Id",
+            "in": "header",
+            "description": "Optional correlation ID associated with the request, comprised of alphanumeric or hyphen characters up to 36 characters in length.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The request object containing details for updating a business.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UpdateBusinessRequest"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UpdateBusinessRequest"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UpdateBusinessRequest"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully updated the business information.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Business"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Business"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Business"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request. Check query parameters.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Authentication failed."
+          },
+          "403": {
+            "description": "Forbidden. You're not allowed to perform this operation."
+          },
+          "404": {
+            "description": "Not Found. No business found for supplied ID.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/v1/business": {
+      "post": {
+        "tags": [
+          "Business"
+        ],
+        "summary": "Creates Business",
+        "description": "Creates a new business in the domain.\r\n            A business is a generic entity that has different types.",
+        "parameters": [
+          {
+            "name": "X-Request-Id",
+            "in": "header",
+            "description": "Optional correlation ID associated with the request, comprised of alphanumeric or hyphen characters up to 36 characters in length.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The request object containing details for creating a new business.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CreateBusinessRequest"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CreateBusinessRequest"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CreateBusinessRequest"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created a new business in the domain.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Business"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Business"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Business"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request. Check query parameters.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Authentication failed."
+          },
+          "403": {
+            "description": "Forbidden. You're not allowed to perform this operation."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Business"
+        ],
+        "summary": "Search for a Business",
+        "description": "Finds a business entity in the domain based of a query.",
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "EIN",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Alias",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "The maximum page size requested.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "index",
+            "in": "query",
+            "description": "The starting index in the list of records to be returned.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "X-Request-Id",
+            "in": "header",
+            "description": "Optional correlation ID associated with the request, comprised of alphanumeric or hyphen characters up to 36 characters in length.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved business information.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponseBusinessWithoutParent"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponseBusinessWithoutParent"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponseBusinessWithoutParent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request. Check query parameters.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Authentication failed."
+          },
+          "403": {
+            "description": "Forbidden. You're not allowed to perform this operation."
+          },
+          "404": {
+            "description": "Not Found. No business found for supplied ID.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/v1/business/ancestors/{id}": {
+      "get": {
+        "tags": [
+          "Business"
+        ],
+        "summary": "Gets Business hierarchy",
+        "description": "Lists the business ancestry in the domain.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "he GUID generated for accesing this specific business and its related resources",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "The maximum page size requested.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "index",
+            "in": "query",
+            "description": "The starting index in the list of records to be returned.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "X-Request-Id",
+            "in": "header",
+            "description": "Optional correlation ID associated with the request, comprised of alphanumeric or hyphen characters up to 36 characters in length.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved business information.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponseBusinessWithoutParent"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponseBusinessWithoutParent"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponseBusinessWithoutParent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request. Check query parameters.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Authentication failed."
+          },
+          "403": {
+            "description": "Forbidden. You're not allowed to perform this operation."
+          },
+          "404": {
+            "description": "Not Found. No business found for supplied ID.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/v1/legacy/administrators/{administrator_code}": {
+      "get": {
+        "tags": [
+          "Legacy"
+        ],
+        "summary": "Lookup Administrator",
+        "description": "To execute a call to lookup an Administrator, a valid <b>JWT Token</b> is required for authentication.",
+        "parameters": [
+          {
+            "name": "administrator_code",
+            "in": "path",
+            "description": "The Administrator code to fetch data",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Request-Id",
+            "in": "header",
+            "description": "Optional correlation ID associated with the request, comprised of alphanumeric or hyphen characters up to 36 characters in length.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the administrator information."
+          },
+          "400": {
+            "description": "Invalid request. Check query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Authentication failed."
+          },
+          "403": {
+            "description": "Forbidden. You're not allowed to perform this operation."
+          },
+          "404": {
+            "description": "Not Found. No administrator found for supplied ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/v1/legacy/administrators/{administrator_code}/employers/{employer_code}": {
+      "get": {
+        "tags": [
+          "Legacy"
+        ],
+        "summary": "Lookup Employer",
+        "description": "To execute a call to lookup an Employer, a valid <b>JWT Token</b> is required for authentication.",
+        "parameters": [
+          {
+            "name": "administrator_code",
+            "in": "path",
+            "description": "The Administrator code to fetch data",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "employer_code",
+            "in": "path",
+            "description": "The Employer code to fetch data",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Request-Id",
+            "in": "header",
+            "description": "Optional correlation ID associated with the request, comprised of alphanumeric or hyphen characters up to 36 characters in length.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the employer information for the given administrator.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegacyEmployerData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request. Check query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Authentication failed."
+          },
+          "403": {
+            "description": "Forbidden. You're not allowed to perform this operation."
+          },
+          "404": {
+            "description": "Not Found. Provided code for administrator or employer could not be found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/health/liveness": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "summary": "Get Liveness",
+        "description": "This endpoint is used to check the liveness of the service. This is just a simple ping to see if the service is alive.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "results": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error: response status is 503",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "results": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Administrator": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "administrator_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_ein": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_exchange_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "business_alias": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Business": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "alias": {
+            "type": "string",
+            "nullable": true
+          },
+          "ein": {
+            "type": "string",
+            "nullable": true
+          },
+          "exchange_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "business_type": {
+            "enum": [
+              "BUSINESS_PARTY",
+              "ADMINISTRATOR",
+              "EMPLOYER"
+            ],
+            "type": "string"
+          },
+          "admin_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "parent_id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BusinessWithoutParent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "alias": {
+            "type": "string",
+            "nullable": true
+          },
+          "ein": {
+            "type": "string",
+            "nullable": true
+          },
+          "exchange_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "business_type": {
+            "enum": [
+              "BUSINESS_PARTY",
+              "ADMINISTRATOR",
+              "EMPLOYER"
+            ],
+            "type": "string"
+          },
+          "admin_id": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateAdministratorRequest": {
+        "required": [
+          "administrator_code",
+          "business_alias",
+          "business_ein",
+          "business_name"
+        ],
+        "type": "object",
+        "properties": {
+          "administrator_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_ein": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_exchange_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "business_alias": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateBusinessRequest": {
+        "required": [
+          "admin_id",
+          "alias",
+          "ein",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "alias": {
+            "type": "string",
+            "nullable": true
+          },
+          "ein": {
+            "type": "string",
+            "nullable": true
+          },
+          "exchange_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "admin_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_type": {
+            "enum": [
+              "BUSINESS_PARTY",
+              "ADMINISTRATOR",
+              "EMPLOYER"
+            ],
+            "type": "string"
+          },
+          "parent_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LegacyCobraBusiness": {
+        "type": "object",
+        "properties": {
+          "business_identity_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "administrator": {
+            "type": "string",
+            "nullable": true
+          },
+          "company_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "employer_id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "server_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "admin_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "employer_code": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LegacyEmployer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "employer_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "admin_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LegacyEmployerData": {
+        "type": "object",
+        "properties": {
+          "business_id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "employer_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "cdb": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LegacyCobraBusiness"
+              }
+            ],
+            "nullable": true
+          },
+          "cdh": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LegacyEmployer"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PaginatedResponseBusinessWithoutParent": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BusinessWithoutParent"
+            },
+            "nullable": true
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page_size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "has_next": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "UpdateBusinessRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "alias": {
+            "type": "string",
+            "nullable": true
+          },
+          "ein": {
+            "type": "string",
+            "nullable": true
+          },
+          "exchange_id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Please enter a token",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}

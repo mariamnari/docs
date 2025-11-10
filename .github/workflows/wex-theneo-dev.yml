@@ -34,5 +34,5 @@ jobs:
           theneo import \
             --project sample-theneo-doc/ \
             --workspace wexinc \
-            --dir docs \
+            --dir wex-docs \
             --profile dev
