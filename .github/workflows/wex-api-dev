@@ -1,0 +1,41 @@
+name: Push to Theneo
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  push-openapi-to-theneo:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      
+      - name: Install Theneo CLI
+        run: npm install -g @theneo/cli@latest
+      
+      - name: Login to Theneo (Dev)
+        run: |
+          echo "Logging in to Theneo (Dev)..."
+          theneo login --profile dev --token ${{ secrets.THENEO_TOKEN_DEV }} --api-url https://api-dev.theneo.io --app-url https://app-dev.theneo.io
+      
+      
+      - name: Push docs to Theneo
+        run: |
+          echo "Pushing docs to Theneo..."
+          theneo import \
+            --project sample-theneo-doc \
+            --workspace wexinc \
+            --publish \
+            --file ./health-api.json \
+            --import-type overwrite
+            --dir wex-docs \
+            --profile dev
