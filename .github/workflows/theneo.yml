@@ -1,11 +1,9 @@
 name: Push to Theneo
-
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
-
+  workflow_dispatch
 jobs:
   push-openapi-to-theneo:
     runs-on: ubuntu-latest
@@ -25,13 +23,12 @@ jobs:
       - name: Login to Theneo (Dev)
         run: |
           echo "Logging in to Theneo (Dev)..."
-          theneo login --token e1e49692-4235-45e1-a31b-740c428d2c16 --api-url https://api.theneo.io --app-url https://app.theneo.io
-      
+          theneo login --token ${{ secrets.THENEO_TOKEN }} --api-url https://api.theneo.io --app-url https://app.theneo.io
       
       - name: Push docs to Theneo
         run: |
           echo "Pushing docs to Theneo..."
           theneo project import \
-            --file /Users/marieedelstein/Desktop/API Specs/openapi (7).yaml
+            --file "openapi.yaml" \
             --project github-actions-1 \
-            --publish \
+            --publish
