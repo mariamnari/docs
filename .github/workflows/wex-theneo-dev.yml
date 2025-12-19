@@ -1,38 +1,54 @@
-name: Push to Theneo
+name: Update Documentation
 
 on:
-  push:
+
+  pull_request:
+
     branches:
+
       - main
-  workflow_dispatch:
 
 jobs:
-  push-openapi-to-theneo:
+
+  update-doc:
+
+    name: Update Theneo Documentation
+
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout code
+
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - name: Checkout
+
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
+
         uses: actions/setup-node@v4
+
         with:
-          node-version: '22'
-      
-      - name: Install Theneo CLI
-        run: npm install -g @theneo/cli@latest
-      
-      - name: Login to Theneo (Dev)
-        run: |
-          echo "Logging in to Theneo (Dev)..."
-          theneo login --profile dev --token ${{ secrets.THENEO_TOKEN_DEV }} --api-url https://api-dev.theneo.io --app-url https://app-dev.theneo.io
-      
-      
-      - name: Push docs to Theneo
-        run: |
-          echo "Pushing docs to Theneo..."
-          theneo import \
-            --project sample-doc \
-            --workspace wexinc \
-            --dir wex-docs \
-            --profile dev
+
+          node-version: "18"
+      - name: Update Documentation on Theneo
+
+        uses: Theneo-Inc/api-documentation@1.8.0
+
+        with:
+
+          FILE_PATH: /Users/marieedelstein/Desktop/API Specs/openapi (7).yaml
+
+          PROJECT_SLUG: github-actions-1
+
+          VERSION_SLUG: <version_slug>
+
+          WORKSPACE_SLUG: mariam-testing
+
+          SECRET: 7063a11a-2a5a-4316-abc2-14edbee51c30
+
+
+          AUTO_PUBLISH: true
+
+          IMPORT_OPTION: overwrite
+
+          INCLUDE_GITHUB_METADATA: true
