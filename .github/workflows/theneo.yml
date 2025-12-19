@@ -25,7 +25,7 @@ jobs:
       - name: Login to Theneo (Dev)
         run: |
           echo "Logging in to Theneo (Dev)..."
-          theneo login --token 7063a11a-2a5a-4316-abc2-14edbee51c30 --api-url https://api.theneo.io --app-url https://app.theneo.io
+          theneo login --token e1e49692-4235-45e1-a31b-740c428d2c16 --api-url https://api.theneo.io --app-url https://app.theneo.io
       
       
       - name: Push docs to Theneo
