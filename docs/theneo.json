@@ -1,12 +1,20 @@
 {
   "id": "6a4617930270fc7b5c80cc19",
   "name": "github-sync",
-  "lastExport": "2026-07-02T07:48:57.530Z",
+  "lastExport": "2026-07-02T07:52:39.709Z",
   "baseUrl": "http://example.io",
   "sections": [
     {
       "name": "Introduction/Overview",
       "slug": "introduction-overview",
+      "children": [],
+      "isHeader": false,
+      "externalPageLink": "",
+      "isNewTab": false
+    },
+    {
+      "name": "New Section",
+      "slug": "new-section",
       "children": [],
       "isHeader": false,
       "externalPageLink": "",
